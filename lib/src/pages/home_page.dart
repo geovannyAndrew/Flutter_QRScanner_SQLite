@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qrscanner_sqlite_flutter/src/pages/addresses_page.dart';
 import 'package:qrscanner_sqlite_flutter/src/pages/maps_page.dart';
 
+import 'package:qrcode_reader/qrcode_reader.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
 
@@ -65,8 +67,27 @@ class _HomePageState extends State<HomePage> {
   Widget _buildFloatActionButton() {
     return FloatingActionButton(
       child: Icon(Icons.filter_center_focus),
-      onPressed: (){},
+      onPressed: _scanQR,
       backgroundColor: Theme.of(context).primaryColor,
     );
+  }
+
+  _scanQR() async{
+
+    //Posible results
+    //https://geobuitrago.dev -> Url
+    //geo:40.741923619036605,-73.90294447382814 -> Map Location
+    //MATMSG:TO:geovanny.andrew911@gmail.com;SUB:Asunto;BODY:Texto;; -> Email
+    
+    String futureString = '';
+    try {
+      futureString = await QRCodeReader().scan();
+    } catch (e) {
+      futureString = e.toString();
+    }
+    print('FutureString $futureString');
+    if(futureString != null){
+      print('We have data');
+    }
   }
 }
