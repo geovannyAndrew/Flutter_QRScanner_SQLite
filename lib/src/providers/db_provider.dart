@@ -1,3 +1,7 @@
+import 'dart:io';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 class DBProvider{
@@ -13,6 +17,21 @@ class DBProvider{
   }
 
   initDB() async {
-
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    final path = join(documentsDirectory.path, 'scans.db');
+    return await openDatabase(
+      path,
+      version: 1,
+      onOpen: (db){},
+      onCreate: (Database db, int version) async{
+        await db.execute(
+          'CREATE TABLE scans ('
+          ' id INTEGER PRIMARY KEY,'
+          ' type TEXT,'
+          ' value TEXT'
+          ')'
+        );
+      }
+    );
   }
 }
