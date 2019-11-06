@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:qrscanner_sqlite_flutter/src/models/scan_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 
@@ -25,13 +26,27 @@ class DBProvider{
       onOpen: (db){},
       onCreate: (Database db, int version) async{
         await db.execute(
-          'CREATE TABLE scans ('
-          ' id INTEGER PRIMARY KEY,'
-          ' type TEXT,'
-          ' value TEXT'
-          ')'
+          "CREATE TABLE scans ("
+          " id INTEGER PRIMARY KEY,"
+          " type TEXT,"
+          " value TEXT"
+          ")"
         );
       }
     );
+  }
+
+  newScanRaw(Scan scan) async{
+    final db = await database;
+    final res = await db.rawInsert(
+      "INSERT INTO scans (id, type, value) "
+      "VALUES ( ${scan.id}, '${scan.type}', '${scan.value}')"
+    );
+    return res;
+  }
+
+  newScan(Scan scan) async{
+    final db = await database;
+    final res = db.insert('scans', scan.toJson());
   }
 }
