@@ -4,6 +4,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:qrscanner_sqlite_flutter/src/models/scan_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
+export 'package:qrscanner_sqlite_flutter/src/models/scan_model.dart';
 
 class DBProvider{
   static Database _database;
@@ -50,6 +51,7 @@ class DBProvider{
   newScan(Scan scan) async{
     final db = await database;
     final res = await db.insert('scans', scan.toJson());
+    return res;
   }
 
   Future<Scan> getScanId(int id) async{

@@ -3,6 +3,7 @@ import 'package:qrscanner_sqlite_flutter/src/pages/addresses_page.dart';
 import 'package:qrscanner_sqlite_flutter/src/pages/maps_page.dart';
 
 import 'package:qrcode_reader/qrcode_reader.dart';
+import 'package:qrscanner_sqlite_flutter/src/providers/db_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -79,15 +80,20 @@ class _HomePageState extends State<HomePage> {
     //geo:40.741923619036605,-73.90294447382814 -> Map Location
     //MATMSG:TO:geovanny.andrew911@gmail.com;SUB:Asunto;BODY:Texto;; -> Email
     
-    String futureString = '';
+    String futureString = 'https://geobuitrago.dev';
+    /*
     try {
       futureString = await QRCodeReader().scan();
     } catch (e) {
       futureString = e.toString();
     }
     print('FutureString $futureString');
+    */
     if(futureString != null){
-      print('We have data');
+      final scan = Scan(
+        value: futureString
+      );
+      DBProvider.db.newScan(scan);
     }
   }
 }
