@@ -38,6 +38,7 @@ class MapsPage extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                   ),
                   title: Text(scan.value),
+                  subtitle: Text('#${scan.id}'),
                   trailing: Icon(Icons.arrow_forward_ios,
                     color: Colors.grey,
                   ),
