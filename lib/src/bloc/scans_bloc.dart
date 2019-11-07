@@ -37,5 +37,6 @@ class ScansBloc{
 
   insertScan(Scan scan) async{
     await DBProvider.db.newScan(scan);
+    getAllScans();
   }
 }

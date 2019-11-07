@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:qrscanner_sqlite_flutter/src/providers/db_provider.dart';
+import 'package:qrscanner_sqlite_flutter/src/bloc/scans_bloc.dart';
+import 'package:qrscanner_sqlite_flutter/src/models/scan_model.dart';
 
 class MapsPage extends StatelessWidget {
-  const MapsPage({Key key}) : super(key: key);
+
+  final scansBloc = ScansBloc();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FutureBuilder<List<Scan>>(
-        future: DBProvider.db.getAllScans(),
+      child: StreamBuilder<List<Scan>>(
+        stream: scansBloc.scansStream ,
         builder: (BuildContext context, AsyncSnapshot<List<Scan>> snapshot) {
           if(!snapshot.hasData){
             return Center(
@@ -32,7 +34,7 @@ class MapsPage extends StatelessWidget {
                 background: Container(
                   color: Colors.red,
                 ),
-                onDismissed: (DismissDirection direction) async => await DBProvider.db.deleteScan(scan.id),
+                onDismissed: (DismissDirection direction) async => await scansBloc.deleteScan(scan.id),
                 child: ListTile(
                   leading: Icon(Icons.cloud_queue,
                     color: Theme.of(context).primaryColor,

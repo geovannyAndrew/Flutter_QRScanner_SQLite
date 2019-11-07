@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:qrscanner_sqlite_flutter/src/bloc/scans_bloc.dart';
+import 'package:qrscanner_sqlite_flutter/src/models/scan_model.dart';
 import 'package:qrscanner_sqlite_flutter/src/pages/addresses_page.dart';
 import 'package:qrscanner_sqlite_flutter/src/pages/maps_page.dart';
-
 import 'package:qrcode_reader/qrcode_reader.dart';
-import 'package:qrscanner_sqlite_flutter/src/providers/db_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -15,6 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   int _currentPage = 0;
+  final scansBloc = ScansBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.delete_forever),
-            onPressed: (){},
+            onPressed: () => scansBloc.deleteAllScans(),
           )
         ],
       ),
@@ -93,7 +94,7 @@ class _HomePageState extends State<HomePage> {
       final scan = Scan(
         value: futureString
       );
-      DBProvider.db.newScan(scan);
+      scansBloc.insertScan(scan);
     }
   }
 }
