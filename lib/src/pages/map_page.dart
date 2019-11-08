@@ -37,7 +37,8 @@ class _MapPageState extends State<MapPage> {
         zoom: 15
       ),
       layers: [
-        _buildLayerMap()
+        _buildLayerMap(),
+        _buildMarkers(scan)
       ],
     );
   }
@@ -47,9 +48,27 @@ class _MapPageState extends State<MapPage> {
       urlTemplate: 'https://api.mapbox.com/v4/'
       '{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}',
       additionalOptions: {
-        'accessToken' : keys.mapboxAccessToken,
+        'accessToken' : keys.MAPBOX_ACCESS_TOKEN,
         'id'          : 'mapbox.streets' // streets, dark, light, outdoors, satellite
       }
+    );
+  }
+
+  _buildMarkers(Scan scan) {
+    return MarkerLayerOptions(
+      markers: <Marker>[
+        Marker(
+          width: 100,
+          height: 100,
+          point: scan.latLng,
+          builder: (context){
+            return Icon(Icons.location_on,
+              size: 45.0,
+              color: Theme.of(context).primaryColor,
+            );
+          }
+        )
+      ]
     );
   }
 }
