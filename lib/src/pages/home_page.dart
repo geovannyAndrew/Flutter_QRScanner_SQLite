@@ -95,6 +95,11 @@ class _HomePageState extends State<HomePage> {
         value: futureString
       );
       scansBloc.insertScan(scan);
+
+      final scan2 = Scan(
+        value: 'geo:40.741923619036605,-73.90294447382814'
+      );
+      scansBloc.insertScan(scan2);
     }
   }
 }

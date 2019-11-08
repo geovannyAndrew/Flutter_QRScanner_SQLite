@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qrscanner_sqlite_flutter/src/bloc/scans_bloc.dart';
 import 'package:qrscanner_sqlite_flutter/src/models/scan_model.dart';
+import 'package:qrscanner_sqlite_flutter/src/utils/utils.dart' as utils;
 
 class MapsPage extends StatelessWidget {
 
@@ -44,6 +45,7 @@ class MapsPage extends StatelessWidget {
                   trailing: Icon(Icons.arrow_forward_ios,
                     color: Colors.grey,
                   ),
+                  onTap: () => utils.launchScan(scan),
                 ),
               );
            },
