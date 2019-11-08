@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:latlong/latlong.dart';
 
 Scan scanFromJson(String str) => Scan.fromJson(json.decode(str));
 
@@ -33,4 +34,11 @@ class Scan {
         "type"  : type,
         "value" : value,
     };
+
+    LatLng get latLng{
+      final lalo = value.substring(4).split(',');
+      final lat = double.parse(lalo[0]);
+      final lng = double.parse(lalo[1]);
+      return LatLng(lat,lng);
+    }
 }
