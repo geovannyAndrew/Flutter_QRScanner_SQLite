@@ -4,6 +4,7 @@ import 'package:qrscanner_sqlite_flutter/src/models/scan_model.dart';
 import 'package:qrscanner_sqlite_flutter/src/pages/addresses_page.dart';
 import 'package:qrscanner_sqlite_flutter/src/pages/maps_page.dart';
 import 'package:qrcode_reader/qrcode_reader.dart';
+import 'package:qrscanner_sqlite_flutter/src/utils/utils.dart' as utils;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -69,19 +70,19 @@ class _HomePageState extends State<HomePage> {
   Widget _buildFloatActionButton() {
     return FloatingActionButton(
       child: Icon(Icons.filter_center_focus),
-      onPressed: _scanQR,
+      onPressed: () => _scanQR(context),
       backgroundColor: Theme.of(context).primaryColor,
     );
   }
 
-  _scanQR() async{
+  _scanQR(BuildContext context) async{
 
     //Posible results
     //https://geobuitrago.dev -> Url
     //geo:40.741923619036605,-73.90294447382814 -> Map Location
     //MATMSG:TO:geovanny.andrew911@gmail.com;SUB:Asunto;BODY:Texto;; -> Email
     
-    String futureString = 'https://geobuitrago.dev';
+    String futureString = 'geo:40.741923619036605,-73.90294447382814';
     /*
     try {
       futureString = await QRCodeReader().scan();
@@ -95,11 +96,7 @@ class _HomePageState extends State<HomePage> {
         value: futureString
       );
       scansBloc.insertScan(scan);
-
-      final scan2 = Scan(
-        value: 'geo:40.741923619036605,-73.90294447382814'
-      );
-      scansBloc.insertScan(scan2);
+      utils.launchScan(context, scan);
     }
   }
 }

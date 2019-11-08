@@ -45,7 +45,7 @@ class MapsPage extends StatelessWidget {
                   trailing: Icon(Icons.arrow_forward_ios,
                     color: Colors.grey,
                   ),
-                  onTap: () => utils.launchScan(scan),
+                  onTap: () => utils.launchScan(context, scan),
                 ),
               );
            },
