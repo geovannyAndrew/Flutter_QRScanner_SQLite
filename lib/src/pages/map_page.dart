@@ -11,6 +11,9 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
+
+  final MapController mapController = MapController();
+
   @override
   Widget build(BuildContext context) {
 
@@ -22,7 +25,9 @@ class _MapPageState extends State<MapPage> {
          actions: <Widget>[
            IconButton(
              icon: Icon(Icons.my_location),
-             onPressed: (){},
+             onPressed: (){
+               mapController.move(scan.latLng, 15);
+             },
            )
          ],
        ),
@@ -32,6 +37,7 @@ class _MapPageState extends State<MapPage> {
 
   Widget _buildMap(Scan scan) {
     return FlutterMap(
+      mapController: mapController,
       options: MapOptions(
         center: scan.latLng,
         zoom: 15
