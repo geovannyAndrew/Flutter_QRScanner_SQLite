@@ -13,10 +13,12 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
 
   final MapController mapController = MapController();
+  double _zoom = 15;
+  String _typeMap = "streets";
 
   @override
   Widget build(BuildContext context) {
-
+    
     final Scan scan = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
@@ -26,12 +28,13 @@ class _MapPageState extends State<MapPage> {
            IconButton(
              icon: Icon(Icons.my_location),
              onPressed: (){
-               mapController.move(scan.latLng, 15);
+               mapController.move(scan.latLng, _zoom);
              },
            )
          ],
        ),
        body: _buildMap(scan),
+       floatingActionButton: _buildFloatingActionButton(context),
     );
   }
 
@@ -40,7 +43,10 @@ class _MapPageState extends State<MapPage> {
       mapController: mapController,
       options: MapOptions(
         center: scan.latLng,
-        zoom: 15
+        zoom: _zoom,
+        onPositionChanged: (mapPosition, boo){
+          _zoom = mapController.zoom;
+        }
       ),
       layers: [
         _buildLayerMap(),
@@ -55,7 +61,7 @@ class _MapPageState extends State<MapPage> {
       '{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}',
       additionalOptions: {
         'accessToken' : keys.MAPBOX_ACCESS_TOKEN,
-        'id'          : 'mapbox.streets' // streets, dark, light, outdoors, satellite
+        'id'          : 'mapbox.$_typeMap' // streets, dark, light, outdoors, satellite
       }
     );
   }
@@ -76,5 +82,34 @@ class _MapPageState extends State<MapPage> {
         )
       ]
     );
+  }
+
+  Widget _buildFloatingActionButton(BuildContext context) {
+    return FloatingActionButton(
+      child: Icon(Icons.repeat),
+      backgroundColor: Theme.of(context).primaryColor,
+      onPressed: _changeMapType,
+    );
+  }
+
+  _changeMapType(){
+    if(_typeMap == 'streets'){
+      _typeMap = 'dark';
+    }
+    else if(_typeMap == 'dark'){
+      _typeMap = 'light';
+    }
+    else if(_typeMap == 'light'){
+      _typeMap = 'outdoors';
+    }
+    else if(_typeMap == 'outdoors'){
+      _typeMap = 'satellite';
+    }
+    else{
+      _typeMap = 'streets';
+    }
+    setState(() {
+      
+    });
   }
 }
