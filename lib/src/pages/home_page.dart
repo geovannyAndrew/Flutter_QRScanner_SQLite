@@ -82,7 +82,8 @@ class _HomePageState extends State<HomePage> {
     //geo:40.741923619036605,-73.90294447382814 -> Map Location
     //MATMSG:TO:geovanny.andrew911@gmail.com;SUB:Asunto;BODY:Texto;; -> Email
     
-    String futureString = 'geo:40.741923619036605,-73.90294447382814';
+    //String futureString = 'geo:40.741923619036605,-73.90294447382814';
+    String futureString = 'https://geobuitrago.dev';
     /*
     try {
       futureString = await QRCodeReader().scan();
