@@ -38,7 +38,7 @@ class MapsPage extends StatelessWidget {
                 ),
                 onDismissed: (DismissDirection direction) async => await scansBloc.deleteScan(scan.id),
                 child: ListTile(
-                  leading: Icon(Icons.cloud_queue,
+                  leading: Icon(Icons.map,
                     color: Theme.of(context).primaryColor,
                   ),
                   title: Text(scan.value),
